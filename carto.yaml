@@ -3,6 +3,14 @@ layers:
     12: way[highway~"^(primary|secondary|tertiary|residential|unclassified|pedestrian)(_link)?"]
     16: way[highway~"^(primary|secondary|tertiary|residential|unclassified|living_street|pedestrian|service|footway|cycleway)(_link)?"]
   feature:
+    pre: |-
+      {% set width = const.highway[tags.highway].width|default(2) %}
+      {% set casingWidth = const.highway[tags.highway].width|default(2) * const.highway[tags.highway].casingExpand|default(1.5) %}
+
+      {% if is_area or tags.area == 'yes' %}
+        {% set width = 0 %}
+        {% set casingWidth = (const.highway[tags.highway].width|default(2) * const.highway[tags.highway].casingExpand|default(1.5) - const.highway[tags.highway].width|default(2)) %}
+      {% endif %}
     styles: |-
       {% if const.highway[tags.highway].casingExpand|default(1.5) > 1 %}
         casing_back,casing,
@@ -10,7 +18,7 @@ layers:
       default
     style:
       width: |-
-        {{ const.highway[tags.highway].width|default(2) }}
+        {{ width }}
       color: |-
         {{ const.highway[tags.highway].color|default('#ff0000') }}
       fillColor: |-
@@ -20,12 +28,12 @@ layers:
         {{ tags.layer|default(0) + const.highway[tags.highway].priority|default(0) / 100 }}
     style:casing_back:
       width: |-
-        {{ const.highway[tags.highway].width|default(2) * const.highway[tags.highway].casingExpand|default(1.5) }}
+        {{ casingWidth }}
       color: black
       zIndex: -20
     style:casing:
       width: |-
-        {{ const.highway[tags.highway].width|default(2) * const.highway[tags.highway].casingExpand|default(1.5) }}
+        {{ casingWidth }}
       color: black
       lineCap: butt
       zIndex: |-
