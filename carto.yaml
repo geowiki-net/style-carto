@@ -83,6 +83,16 @@ layers:
       width: 0
       zIndex: -25
 
+- query:
+    12: nwr[leisure=park]
+  feature:
+    style:
+      fillColor: |-
+        {{ const.leisure[tags.leisure].color|default('#ff0000') }}
+      fillOpacity: 1
+      width: 0
+      zIndex: -24.5
+
 const:
   highway:
     primary:
@@ -144,3 +154,7 @@ const:
       color: '#7f7f7f'
     construction:
       color: '#afaf7f'
+
+  leisure:
+    park:
+      color: '#3fff3f'
