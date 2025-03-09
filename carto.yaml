@@ -1,0 +1,138 @@
+layers:
+- query:
+    12: way[highway~"^(primary|secondary|tertiary|residential|unclassified|pedestrian)(_link)?"]
+    16: way[highway~"^(primary|secondary|tertiary|residential|unclassified|living_street|pedestrian|service|footway|cycleway)(_link)?"]
+  feature:
+    styles: |-
+      {% if const.highway[tags.highway].casingExpand|default(1.5) > 1 %}
+        casing_back,casing,
+      {% endif %}
+      default
+    style:
+      width: |-
+        {{ const.highway[tags.highway].width|default(2) }}
+      color: |-
+        {{ const.highway[tags.highway].color|default('#ff0000') }}
+      fillColor: |-
+        {{ const.highway[tags.highway].color|default('#ff0000') }}
+      fillOpacity: 1
+      zIndex: |-
+        {{ tags.layer|default(0) + const.highway[tags.highway].priority|default(0) / 100 }}
+    style:casing_back:
+      width: |-
+        {{ const.highway[tags.highway].width|default(2) * const.highway[tags.highway].casingExpand|default(1.5) }}
+      color: black
+      zIndex: -20
+    style:casing:
+      width: |-
+        {{ const.highway[tags.highway].width|default(2) * const.highway[tags.highway].casingExpand|default(1.5) }}
+      color: black
+      lineCap: butt
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.1 }}
+
+- query:
+    12: nwr[waterway]
+  feature:
+    styles: casing,default
+    style:
+      width: 3
+      color: '#7f7fff'
+      zIndex: |-
+        {{ tags.layer|default(0) }}
+    style:casing:
+      width: 5
+      color: '#0000ff'
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.1 }}
+
+- query:
+    12: nwr[building]
+  feature:
+    styles: back,default
+    style:
+      width: 1
+      color: '#8f7f7f'
+      opacity: 0.33
+      fillColor: '#af8f8f'
+      fillOpacity: 0.33
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.2 }}
+    style:back:
+      width: 1
+      color: '#8f7f7f'
+      fillColor: '#af8f8f'
+      fillOpacity: 1
+      zIndex: -22
+
+- query:
+    12: nwr[landuse]
+  feature:
+    style:
+      fillColor: |-
+        {{ const.landuse[tags.landuse].color|default('#ff0000') }}
+      fillOpacity: 1
+      width: 0
+      zIndex: -25
+
+const:
+  highway:
+    primary:
+      color: '#ff7f00'
+      width: 5
+      priority: 17.5
+    primary_link:
+      color: '#ff7f00'
+      width: 2
+      priority: 17
+    secondary:
+      color: '#ffaf00'
+      width: 5
+      priority: 16.5
+    secondary_link:
+      color: '#ffaf00'
+      width: 2
+      priority: 16
+    tertiary:
+      color: '#ffff00'
+      width: 4
+      priority: 15.5
+    tertiary_link:
+      color: '#ffff00'
+      width: 2
+      priority: 15
+    unclassified:
+      color: '#ffffff'
+      width: 3
+      priority: 10
+    residential:
+      color: '#ffffff'
+      width: 3
+      priority: 10
+    pedestrian:
+      color: '#afffaf'
+      width: 4
+      priority: 11
+    living_street:
+      color: '#afffaf'
+      width: 3
+      priority: 9
+    service:
+      color: '#afafaf'
+      width: 2
+      priority: 5
+    cycleway:
+      color: '#008f00'
+      width: 1.5
+      priority: 7
+    footway:
+      color: '#5f5f5f'
+      width: 1.5
+      casingExpand: 1
+      priority: 6
+
+  landuse:
+    residential:
+      color: '#7f7f7f'
+    construction:
+      color: '#afaf7f'
