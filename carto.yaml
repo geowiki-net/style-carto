@@ -1,3 +1,5 @@
+background: '#f2efe9'
+
 layers:
 - query:
     12: way[highway~"^(primary|secondary|tertiary|residential|unclassified|pedestrian)(_link)?"]
@@ -15,7 +17,7 @@ layers:
       {% if const.highway[tags.highway].casingExpand|default(1.5) > 1 %}
         casing_back,casing,
       {% endif %}
-      default
+      default,text
     style:
       width: |-
         {{ width }}
@@ -29,47 +31,78 @@ layers:
     style:casing_back:
       width: |-
         {{ casingWidth }}
-      color: black
+      color: '#d9d0c9'
       zIndex: -20
     style:casing:
       width: |-
         {{ casingWidth }}
-      color: black
+      color: '#d9d0c9'
       lineCap: butt
       zIndex: |-
         {{ tags.layer|default(0) - 0.1 }}
+    style:text:
+      width: 0
+      fill: false
+      text: |-
+        {{ tags.name }}
+      zIndex: 1000
+      textFontName: DejaVu Sans Book
+      textFontSize: 10
+      textHaloRadius: 0.5
+      textHaloColor: '#ffffff9f'
+      textRepeatSpacing: '500'
+      textPlacement: |-
+        {{ is_area ? 'point' : 'line' }}
 
 - query:
     12: nwr[waterway]
   feature:
-    styles: casing,default
+    styles: casing,default,text
     style:
-      width: 3
-      color: '#7f7fff'
+      width: |-
+        {% if tags.waterway == 'river' %}6
+        {% elseif tags.waterway in ['drain'] %}2
+        {% else %}4
+        {% endif %}
+      color: '#aad3df'
       zIndex: |-
         {{ tags.layer|default(0) }}
-    style:casing:
-      width: 5
-      color: '#0000ff'
-      zIndex: |-
-        {{ tags.layer|default(0) - 0.1 }}
+    style:text:
+      width: 0
+      fill: false
+      text: |-
+        {{ tags.name }}
+      zIndex: 1000
+      textFontName: DejaVu Sans Book
+      textColor: '#5f8db3'
+      textFontSize: 10
+      textHaloRadius: 0.5
+      textHaloColor: '#ffffff9f'
+      textRepeatSpacing: '500'
 
 - query:
     12: nwr[building]
   feature:
+    pre: |-
+      {% set color = '#d9d0c9' %}
+      {% set border = '#bdaea3' %}
     styles: back,default
     style:
       width: 1
-      color: '#8f7f7f'
+      color: |-
+        {{ border }}
       opacity: 0.33
-      fillColor: '#af8f8f'
+      fillColor: |-
+        {{ color }}
       fillOpacity: 0.33
       zIndex: |-
         {{ tags.layer|default(0) - 0.2 }}
     style:back:
       width: 1
-      color: '#8f7f7f'
-      fillColor: '#af8f8f'
+      color: |-
+        {{ border }}
+      fillColor: |-
+        {{ color }}
       fillOpacity: 1
       zIndex: -22
 
@@ -96,48 +129,48 @@ layers:
 const:
   highway:
     primary:
-      color: '#ff7f00'
-      width: 5
+      color: '#fcd6a4'
+      width: 12
       priority: 17.5
     primary_link:
-      color: '#ff7f00'
-      width: 2
+      color: '#fcd6a4'
+      width: 6
       priority: 17
     secondary:
-      color: '#ffaf00'
-      width: 5
+      color: '#fcd6a4'
+      width: 12
       priority: 16.5
     secondary_link:
-      color: '#ffaf00'
-      width: 2
+      color: '#fcd6a4'
+      width: 6
       priority: 16
     tertiary:
-      color: '#ffff00'
-      width: 4
+      color: '#ffffff'
+      width: 10
       priority: 15.5
     tertiary_link:
-      color: '#ffff00'
-      width: 2
+      color: '#ffffff'
+      width: 5
       priority: 15
     unclassified:
       color: '#ffffff'
-      width: 3
+      width: 8
       priority: 10
     residential:
       color: '#ffffff'
-      width: 3
+      width: 8
       priority: 10
     pedestrian:
-      color: '#afffaf'
-      width: 4
+      color: '#ffffff'
+      width: 8
       priority: 11
     living_street:
-      color: '#afffaf'
-      width: 3
+      color: '#ededed'
+      width: 8
       priority: 9
     service:
-      color: '#afafaf'
-      width: 2
+      color: '#ffffff'
+      width: 5
       priority: 5
     cycleway:
       color: '#008f00'
@@ -151,10 +184,10 @@ const:
 
   landuse:
     residential:
-      color: '#7f7f7f'
+      color: '#e0dfdf'
     construction:
-      color: '#afaf7f'
+      color: '#c7c7b4'
 
   leisure:
     park:
-      color: '#3fff3f'
+      color: '#c8facc'
