@@ -61,6 +61,29 @@ layers:
         {{ is_area ? 'point' : 'line' }}
 
 - query:
+    12: way[railway~"^(tram|subway|rail)$"]
+  feature:
+    pre: |-
+      {% set width = const.railway[tags.railway].width|default(2) %}
+      {% set casingWidth = const.railway[tags.railway].width|default(2) * const.railway[tags.railway].casingExpand|default(1.5) %}
+
+    styles: |-
+      default,text
+    style:
+      width: |-
+        {{ width }}
+      color: |-
+        {{ const.railway[tags.railway].color|default('#ff0000') }}
+      fillColor: |-
+        {{ const.railway[tags.railway].color|default('#ff0000') }}
+      fillOpacity: 1
+      fill: false
+      dashArray: |-
+        {{ const.railway[tags.railway].dashArray|default('') }}
+      zIndex: |-
+        {{ tags.layer|default(0) + const.railway[tags.railway].priority|default(0) / 100 }}
+
+- query:
     12: nwr[waterway]
   feature:
     styles: casing,default,text
@@ -204,6 +227,17 @@ const:
       casingExpand: 1
       noFill: true
       priority: 6
+
+  railway:
+    tram:
+      color: '#999999'
+      width: 1.5
+    subway:
+      color: '#999999'
+      width: 2
+    rail:
+      color: '#999999'
+      width: 2.5
 
   landuse:
     construction:
