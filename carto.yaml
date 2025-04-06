@@ -262,8 +262,16 @@ const:
       priority: 43
 
   landuse:
+    retail:
+      color: '#e0dfdf'
+    commercial:
+      color: '#e0dfdf'
     construction:
       color: '#c7c7b4'
+    flowerbed:
+      color: '#cdebb0'
+    meadow:
+      color: '#cdebb0'
     grass:
       color: '#cdebb0'
     railway:
