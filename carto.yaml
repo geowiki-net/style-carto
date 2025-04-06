@@ -251,12 +251,15 @@ const:
     tram:
       color: '#999999'
       width: 1.5
+      priority: 41
     subway:
       color: '#999999'
       width: 2
+      priority: 42
     rail:
       color: '#999999'
       width: 2.5
+      priority: 43
 
   landuse:
     construction:
