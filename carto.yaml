@@ -262,23 +262,35 @@ const:
       priority: 43
 
   landuse:
-    retail:
-      color: '#e0dfdf'
+    allotments:
+      color: '#b1d291'
+    brownfield:
+      color: '#c7c7b4'
     commercial:
       color: '#e0dfdf'
     construction:
       color: '#c7c7b4'
+    education:
+      color: '#e0dfdf'
     flowerbed:
       color: '#cdebb0'
+    garages:
+      color: '#eadae7'
     meadow:
       color: '#cdebb0'
+    military:
+      color: '#c7c7b4'
     grass:
       color: '#cdebb0'
+    industrial:
+      color: '#c7c7b4'
     railway:
       color: '#eadae7'
     recreation_ground:
       color: '#b8b7b7'
     residential:
+      color: '#e0dfdf'
+    retail:
       color: '#e0dfdf'
 
   leisure:
