@@ -113,8 +113,9 @@ layers:
     12: nwr[building]
   feature:
     pre: |-
-      {% set color = '#d9d0c9' %}
-      {% set border = '#bdaea3' %}
+      {% set publicBuilding = tags.building in ['government'] or tags.amenity in ['place_of_worship', 'university', 'school', 'college', 'library'] %}
+      {% set color = publicBuilding ? '#c3b6ab' : '#d9d0c9' %}
+      {% set border = publicBuilding ? '#a79b92' : '#bdaea3' %}
     styles: back,default
     style:
       width: 1
