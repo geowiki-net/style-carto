@@ -161,6 +161,20 @@ layers:
       zIndex: -24.5
 
 - query:
+    14: node[natural=tree]
+  feature:
+    style:
+      text: 'tree'
+      nodeFeature: Circle
+      radius: 0.003
+      width: 0
+      fill: true
+      fillColor: '#b1cda4'
+      fillOpacity: 1
+      zIndex: |-
+        {{ tags.layer|default(0) + 0.1 }}
+
+- query:
     10: way[boundary=administrative][admin_level~"^(2|3|4|5|6|7|8|9)$"];
   feature:
     markerSymbol: false
