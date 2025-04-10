@@ -230,6 +230,28 @@ layers:
       lineCap: butt
       zIndex: 100
 
+- query:
+    10: nwr[railway~'^(station)$']
+  feature:
+    style:
+      text: |-
+        {{ tags.name }}
+      textPlacement: point
+      width: 0
+      fill: true
+      fillOpacity: 1
+      fillColor: '#4b59ae'
+      radius: 3
+      nodeFeature: CircleMarker
+      zIndex: 99
+      textColor: '#4b59ae'
+      textFontName: DejaVu Sans Bold
+      textFontSize: |-
+        {{ tags.railway == 'tram_stop' ? 10 : 12 }}
+      textHaloRadius: 0.5
+      textHaloColor: '#ffffff9f'
+      textMoveY: 3
+
 const:
   highway:
     primary:
