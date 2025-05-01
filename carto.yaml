@@ -87,6 +87,18 @@ layers:
         {{ is_area ? 'point' : 'line' }}
 
 - query:
+    12: (way[man_made=bridge];relation[man_made=bridge];)
+  feature:
+    style:
+      width: 1
+      color: black
+      fill: true
+      fillColor: '#7f7f7f'
+      fillOpacity: 1
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.09 }}
+
+- query:
     12: way[railway~"^(tram|subway|rail)$"]
   feature:
     pre: |-
