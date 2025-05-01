@@ -160,18 +160,27 @@ layers:
         {{ tags.layer|default(0) + const.railway[tags.railway].priority|default(0) / 100 }}
 
 - query:
-    12: nwr[waterway]
+    12: way[waterway]
   feature:
     styles: casing,default,text
     style:
       width: |-
-        {% if tags.waterway == 'river' %}6
+        {% if tags.waterway == 'river' %}5
         {% elseif tags.waterway in ['drain'] %}2
-        {% else %}4
+        {% else %}3
         {% endif %}
       color: '#aad3df'
       zIndex: |-
         {{ tags.layer|default(0) - 0.3 }}
+    style:casing:
+      width: |-
+        {% if tags.waterway == 'river' %}7
+        {% elseif tags.waterway in ['drain'] %}3
+        {% else %}5
+        {% endif %}
+      color: '#7fc9df'
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.4 }}
     style:text:
       width: 0
       fill: false
@@ -184,6 +193,31 @@ layers:
       textHaloRadius: 0.5
       textHaloColor: '#ffffff9f'
       textRepeatSpacing: '500'
+
+- query:
+    12: (way[natural=water];relation[natural=water];)
+  feature:
+    styles: default,text
+    style:
+      width: 1
+      color: '#7fc9df'
+      fillColor: '#aad3df'
+      fill: true
+      fillOpacity: 1
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.35 }}
+    style:text:
+      width: 0
+      fill: false
+      textPlacement: point
+      text: |-
+        {{ tags.name }}
+      zIndex: 999
+      textFontName: DejaVu Sans Book
+      textColor: '#5f8db3'
+      textFontSize: 10
+      textHaloRadius: 0.5
+      textHaloColor: '#ffffff9f'
 
 - query:
     12: nwr[building]
