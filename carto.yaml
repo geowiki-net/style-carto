@@ -418,7 +418,7 @@ const:
     flowerbed:
       color: '#cdebb0'
     forest:
-      color: '#1a751b'
+      color: '#add19e'
     garages:
       color: '#eadae7'
     meadow:
@@ -433,6 +433,8 @@ const:
       color: '#eadae7'
     recreation_ground:
       color: '#b8b7b7'
+    religious:
+      color: '#e0dfdf'
     residential:
       color: '#e0dfdf'
     retail:
