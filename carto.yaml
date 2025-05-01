@@ -27,7 +27,7 @@ layers:
         casing_back,casing,
       {% endif %}
 
-      default,text
+      default,{% if const.highway[tags.highway].highlight %}highlight,{% endif %}text
     style:
       width: |-
         {{ width }}
@@ -44,6 +44,18 @@ layers:
         {{ tags.layer|default(0) + const.highway[tags.highway].priority|default(0) / 100 }}
       lineCap: |-
         {{ isBridge ? 'butt' : 'round' }}
+
+    style:highlight:
+      width: |-
+        {{ 1 }}
+      color: |-
+        {{ const.highway[tags.highway].highlight|default('#ff0000') }}
+      fill: false
+      dashArray: |-
+        {{ const.highway[tags.highway].highlightDashArray|default('') }}
+      zIndex: |-
+        {{ tags.layer|default(0) + const.highway[tags.highway].priority|default(0) / 100 + 0.2 }}
+      lineCap: round
 
     style:casing_back:
       width: |-
@@ -179,7 +191,7 @@ layers:
         {{ color }}
       fillOpacity: 0.33
       zIndex: |-
-        {{ tags.layer|default(0) - 0.2 }}
+        {{ tags.layer|default(0) + 0.2 }}
     style:back:
       width: 1
       color: |-
@@ -188,7 +200,8 @@ layers:
       fillColor: |-
         {{ color }}
       fillOpacity: 1
-      zIndex: -22
+      zIndex: |-
+        {{ tags.layer|default(0) - 0.2 }}
 
 - query:
     12: nwr[landuse]
@@ -308,18 +321,26 @@ const:
       width: 5
       priority: 5
     cycleway:
-      color: '#0000ff'
-      width: 1
-      dashArray: '1,3'
+      color: '#ffffff'
+      width: 3
       noFill: true
       priority: 7
+      highlight: '#0000ff'
+      highlightDashArray: '2,3'
     footway:
-      color: '#f98577'
-      width: 1
-      dashArray: '1,3'
-      casingExpand: 1
+      color: '#ffffff'
+      width: 3
       noFill: true
       priority: 6
+      highlight: '#f98577'
+      highlightDashArray: '2,3'
+    path:
+      color: '#ffffff'
+      width: 3
+      noFill: true
+      priority: 6
+      highlight: '#f98577'
+      highlightDashArray: '2,3'
 
   railway:
     tram:
