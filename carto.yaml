@@ -10,6 +10,7 @@ layers:
       {% set casingWidth = const.highway[tags.highway].width|default(2) + 2 %}
       {% set fill = false %}
       {% set casingColor = '#d9d0c9' %}
+      {% set isBridge = false %}
 
       {% if (is_area and not const.highway[tags.highway].noFill|default(false)) or tags.area == 'yes' %}
         {% set width = 0 %}
@@ -19,6 +20,7 @@ layers:
 
       {% if tags.bridge and tags.bridge != 'no' %}
         {% set casingColor = '#000000' %}
+        {% set isBridge = true %}
       {% endif %}
     styles: |-
       {% if const.highway[tags.highway].casingExpand|default(1.5) > 1 %}
@@ -40,6 +42,9 @@ layers:
         {{ const.highway[tags.highway].dashArray|default('') }}
       zIndex: |-
         {{ tags.layer|default(0) + const.highway[tags.highway].priority|default(0) / 100 }}
+      lineCap: |-
+        {{ isBridge ? 'butt' : 'round' }}
+
     style:casing_back:
       width: |-
         {{ casingWidth }}
@@ -77,9 +82,11 @@ layers:
       {% set casingWidth = const.railway[tags.railway].width|default(2) * const.railway[tags.railway].casingExpand|default(1.5) %}
       {% set backgroundColor = const.landuse.railway.color %}
       {% set casingColor = const.landuse.railway.color %}
+      {% set isBridge = false %}
 
       {% if tags.bridge and tags.bridge != 'no' %}
         {% set casingColor = '#000000' %}
+        {% set isBridge = true %}
       {% endif %}
 
     styles: |-
@@ -121,6 +128,8 @@ layers:
       fillColor: |-
         {{ const.railway[tags.railway].color|default('#ff0000') }}
       fill: false
+      lineCap: |-
+        {{ isBridge ? 'butt' : 'round' }}
       dashArray: |-
         {{ const.railway[tags.railway].dashArray|default('') }}
       zIndex: |-
