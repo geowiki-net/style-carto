@@ -82,9 +82,22 @@ layers:
       textFontSize: 10
       textHaloRadius: 0.5
       textHaloColor: '#ffffff9f'
-      textRepeatSpacing: '500'
-      textPlacement: |-
-        {{ is_area ? 'point' : 'line' }}
+      textPlacement: point
+
+  groupFeature:
+    featureMerge: linemerge
+    style:
+      width: 0
+      fill: false
+      text: |-
+        {{ tags.name }}
+      zIndex: 1001
+      textFontName: DejaVu Sans Book
+      textFontSize: 10
+      textHaloRadius: 0.5
+      textHaloColor: '#ffffff9f'
+      textRepeatSpacing: '200'
+      textPlacement: line
 
 - query:
     12: (way[man_made=bridge];relation[man_made=bridge];)
