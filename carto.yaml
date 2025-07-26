@@ -33,6 +33,11 @@ layers:
       {% endif %}
 
       default{% if const.highway[highway].highlight %},highlight{% endif %}
+      {% if isArea %},text{% endif %}
+    groupId: |-
+      {% if not isArea %}
+      {{ tags.name }}
+      {% endif %}
     style:
       width: |-
         {{ width }}
@@ -90,8 +95,9 @@ layers:
       textPlacement: point
 
   groupFeature:
-    featureMerge: linemerge
     style:
+      geometry: |-
+        {{ geometry|mergeLineStrings }}
       width: 0
       fill: false
       text: |-
