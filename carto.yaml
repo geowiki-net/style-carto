@@ -325,10 +325,9 @@ layers:
 - query:
     10: nwr[railway~'^(station)$']
   feature:
+    groupId: |-
+      {{ tags.name }}
     style:
-      text: |-
-        {{ tags.name }}
-      textPlacement: point
       width: 0
       fill: true
       fillOpacity: 1
@@ -336,6 +335,26 @@ layers:
       radius: 3
       nodeFeature: CircleMarker
       zIndex: 99
+  groupFeature:
+    style:
+      geometry: |-
+        {% set geom = geometry|geomConcave %}
+
+        {% if not geom and members|length == 2 %}
+          {% set geom = geometry|geomPointsToLineString %}
+        {% elseif not geom %}
+          {% set geom = geometry %}
+        {% endif %}
+
+        {{ geom|geomBuffer(0.005) }}
+      text: |-
+        {{ id }}
+      width: 0.5
+      color: '#4b59ae'
+      fill: true
+      fillColor: '#4b59ae'
+      fillOpacity: 0.1
+      textPlacement: point
       textColor: '#4b59ae'
       textFontName: DejaVu Sans Bold
       textFontSize: |-
