@@ -43,7 +43,7 @@ layers:
       zIndex: |-
         {{ tags.layer|default(0) + const.highway[tags.highway].priority|default(0) / 100 }}
       lineCap: |-
-        {{ isBridge ? 'butt' : 'round' }}
+        round
 
     style:highlight:
       width: |-
