@@ -258,7 +258,9 @@ layers:
       fillOpacity: 1
       fill: true
       width: 0
-      zIndex: -25
+
+      zIndex: |-
+        {{ tags.layer|default(-25) - 0.5 }}
 
 - query:
     12: nwr[leisure=park]
