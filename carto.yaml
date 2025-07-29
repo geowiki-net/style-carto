@@ -53,7 +53,7 @@ layers:
       zIndex: |-
         {{ tags.layer|default(0) + const.highway[highway].priority|default(0) / 100 }}
       lineCap: |-
-        {{ isBridge ? 'butt' : 'round' }}
+        round
 
     style:highlight:
       width: |-
@@ -282,7 +282,9 @@ layers:
       fillOpacity: 1
       fill: true
       width: 0
-      zIndex: -25
+
+      zIndex: |-
+        {{ tags.layer|default(-25) - 0.5 }}
 
 - query:
     12: nwr[leisure=park]
