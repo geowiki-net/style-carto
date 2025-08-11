@@ -326,6 +326,11 @@ layers:
 
 - query:
     10: nwr[railway~'^(station)$']
+    14: |-
+      (
+      nwr[railway~'^(station|tram_stop)$'];
+      nwr[highway~'^(bus_stop)$'];
+      )
   feature:
     groupId: |-
       {{ tags.name }}
@@ -376,7 +381,7 @@ layers:
       textColor: '#4b59ae'
       textFontName: DejaVu Sans Bold
       textFontSize: |-
-        {{ tags.railway == 'tram_stop' ? 10 : 12 }}
+        {{ ('station' in tags.railway|split(';')) ? 12 : 10 }}
       textHaloRadius: 0.5
       textHaloColor: '#ffffff9f'
       textMoveY: 3
