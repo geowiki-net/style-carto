@@ -338,7 +338,26 @@ layers:
       nodeFeature: CircleMarker
       zIndex: 99
   groupFeature:
+    styles: |-
+      {% if map.zoom >= 16 %}default,text{% else %}text{% endif %}
     style:
+      geometry: |-
+        {% set geom = geometry|geomConcave %}
+
+        {% if not geom and members|length == 2 %}
+          {% set geom = geometry|geomPointsToLineString %}
+        {% elseif not geom %}
+          {% set geom = geometry %}
+        {% endif %}
+
+        {{ geom|geomBuffer(0.005) }}
+      width: 0.5
+      color: '#4b59ae'
+      fill: true
+      fillColor: '#4b59ae'
+      fillOpacity: 0.1
+      zIndex: 99
+    style:text:
       geometry: |-
         {% set geom = geometry|geomConcave %}
 
@@ -351,11 +370,8 @@ layers:
         {{ geom|geomBuffer(0.005) }}
       text: |-
         {{ id }}
-      width: 0.5
-      color: '#4b59ae'
-      fill: true
-      fillColor: '#4b59ae'
-      fillOpacity: 0.1
+      width: 0
+      fill: false
       textPlacement: point
       textColor: '#4b59ae'
       textFontName: DejaVu Sans Bold
@@ -364,6 +380,7 @@ layers:
       textHaloRadius: 0.5
       textHaloColor: '#ffffff9f'
       textMoveY: 3
+      zIndex: 999
 
 const:
   highway:
